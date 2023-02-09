@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jtatro5</groupId>
+    <artifactId>JimJdeployTest</artifactId>
+    <version>1.0.1</version>
+    <packaging>jar</packaging>
+    
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <moduleName>jdeploytest</moduleName>
+        <mainClass>jtatro.JimJdeployTestLauncher</mainClass>
+        <javafx.version>17</javafx.version>
+        <!--
+        <mac.javafx.jmods.path>/Library/Java/JavaFX/javafx-jmods-19</mac.javafx.jmods.path>
+        <win.javafx.jmods.path>C:\Program Files\javafx-jmods-19.0.1</win.javafx.jmods.path>
+        -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <build>
+        <plugins>
+                        
+            <!--
+                The purpose of the maven-dependency-plugin here is to move all
+                dependencies into the following directory:
+                '${project.build.directory}/modules'
+            -->
+            
+            
+            
+            <!--
+                commented out for testing:
+        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-libs</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            -->
+   
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <!--  
+                    This configuration setup stops a strange compiler error
+                    if you don't specifically configure the <source> and
+                    <target> options:
+                    Compilation failure: Compilation failure: 
+                    [ERROR] Source option 5 is no longer supported. Use 7 or later.
+                    [ERROR] Target option 5 is no longer supported. Use 7 or later.
+                -->
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+          
+            <!--
+                Normally, the JAR is placed in the 'target' directory.  
+                Here, the configuration is changed slightly to have the JAR
+                placed in the 'target/modules' directory to make it easier 
+                to set the module-path
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>modules/</classpathPrefix>
+                            <mainClass>
+                                ${mainClass}
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                    <outputDirectory>
+                        ${project.build.directory}/modules
+                    </outputDirectory>
+                </configuration>
+            </plugin>
+            
+            <!-- No need to install this app into local repository -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            
+            <!--
+                The module-path is set to the '/target/modules'
+                directory because the application jar and all dependencies
+                were placed in this directory during build and package phases.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>--module-path</argument>
+                        <!--                        <argument>/target/modules</argument>-->
+                        <modulepath/>                            
+                        <argument>--module</argument>
+                        <argument>${moduleName}/${mainClass}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>        
+    </build>    
+    
+    <dependencies>
+        <!--
+            These first two dependencies have further depencies on javafx.base
+            and javafx.graphics which will be brought in by Maven automatically
+            as transitive dependencies.  No need to explicitly mention them
+            here
+        -->
+        <dependency>
+            <!-- required by DSLAnalyzer as a javafx project -->
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <!-- required by DSLAnalyzer as a javafx project -->
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <!-- required by DSLAnalyzer as a javafx project -->
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        
+    </dependencies>
+    
+</project>

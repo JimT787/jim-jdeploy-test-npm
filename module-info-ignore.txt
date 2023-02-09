@@ -1,0 +1,15 @@
+module jdeploytest{
+    requires java.desktop;
+    requires java.logging;
+    requires java.net.http;
+    requires java.prefs;
+    requires java.xml;
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires javafx.web;
+    
+    //had "opens ... to javafx.fxml" originally for each of these
+    opens jtatro;
+    
+    exports jtatro;
+}

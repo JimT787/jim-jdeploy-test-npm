@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+    <action>
+        <actionName>run</actionName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal><!-- maven default package is jar -->
+            <goal>exec:exec</goal>
+        </goals>
+    </action>
+    
+    <action>
+        <actionName>debug</actionName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal><!-- maven default package is jar -->
+            <goal>exec:exec</goal>
+        </goals>
+        <properties>
+            <exec.args>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address} --module-path ${project.build.directory}/modules --module ${moduleName}/${mainClass}</exec.args>
+            <jpda.listen>true</jpda.listen>
+        </properties>
+    </action>
+    
+    <action>
+        <actionName>CUSTOM-JPackage</actionName>
+        <displayName>JPackage</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal>
+            <goal>jpackage:jpackage</goal>
+        </goals>
+    </action>
+    
+    <action>
+            <actionName>CUSTOM-Create Runtime Image</actionName>
+            <displayName>Create Runtime Image</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+        </action>
+</actions>
