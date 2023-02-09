@@ -1,36 +1,27 @@
 {
-    "bin": {"jimjdeploytest": "jdeploy-bundle/jdeploy.js"},
-    "author": "Jim",
-    "description": "test of jDeploy",
-    "main": "index.js",
-    "preferGlobal": true,
-    "repository": "https://github.com/JimT787/jdeploytest",
-    "version": "1.0.13",
-    "jdeploy": {
-        "installers": [
-            "mac-x64",
-            "mac-arm64",
-            "win",
-            "linux"
-        ],
-        "jdk": false,
-        "javaVersion": "11",
-        "bundles": [
-            "mac-x64",
-            "mac-arm64",
-            "win",
-            "linux"
-        ],
-        "jar": "target/JimJdeployTest-1.0.1.jar",
-        "javafx": true,
-        "title": "Jimjdeploytest"
-    },
-    "dependencies": {
-		"njre": "^0.2.0",
-        "shelljs": "^0.8.4"
-    },
-    "license": "ISC",
-    "name": "jimjdeploytest",
-    "files": ["jdeploy-bundle"],
-    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+  "bin": {"jimjdeploytest": "jdeploy-bundle/jdeploy.js"},
+  "author": "Jim Tatro",
+  "description": "Test of jDeploy using NPM",
+  "main": "index.js",
+  "preferGlobal": true,
+  "repository": "https://github.com/JimT787/jim-jdeploy-test-npm",
+  "version": "1.0.14",
+  "jdeploy": {
+    "jdk": false,
+    "javaVersion": 17,
+    "jar": "target/JimJdeployTest-1.0.14.jar",
+    "javafx": false,
+    "title": "JimJdeployTest 1 0 14"
+  },
+  "dependencies": {
+    "command-exists-promise": "^2.0.2",
+    "node-fetch": "2.6.7",
+    "tar": "^4.4.8",
+    "yauzl": "^2.10.0",
+    "shelljs": "^0.8.4"
+  },
+  "license": "ISC",
+  "name": "JimJdeployTest-1-0-14",
+  "files": ["jdeploy-bundle"],
+  "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
 }
